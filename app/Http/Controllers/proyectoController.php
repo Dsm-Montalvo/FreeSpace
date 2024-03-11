@@ -30,6 +30,7 @@ class proyectoController extends Controller
         return view('insercion');
     }
 
+
     public function save(Request $request){
         $request->validate([
             
@@ -86,5 +87,12 @@ class proyectoController extends Controller
         return redirect ()->route('listado');
     }
 
+    public function login(){
+        return view('Login/login');
+    }
+
+    public function register(){
+        return view('Login/register');
+    }
 
 }
