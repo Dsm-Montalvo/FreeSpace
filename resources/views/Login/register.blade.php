@@ -40,7 +40,9 @@
 
   <div class="content">
     <section>
-    <form>
+    <form action="{{route('registro')}}" method="POST" enctype="multipart/form-data">
+      @csrf
+      {{csrf_field() }}
         <h1>Registrarse </h1>
         <div class="inputbox">
             <ion-icon name="name-outline"> </ion-icon>

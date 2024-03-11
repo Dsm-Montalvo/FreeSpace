@@ -33,8 +33,11 @@ Route::post('/updatesave', [proyectoController::class, 'updatesave'])->name('upd
 //---------------------------------Eliminar-----------------------------------------------------
 Route::get('/delete/{id}', [proyectoController::class, 'delete'])->name('destroy');
 
-
+//----------------------------------vistas-------------------------------------------------------
 Route::get('/listadoPIR', [proyectoController::class, 'listadoPIR'])->name('listadoPIR');
-
+Route::get('/graficos', [proyectoController::class, 'graficos'])->name('graficos');
+//-----------------------------------login--------------------------------------------------------
 Route::get('/login', [proyectoController::class, 'login'])->name('login');
+Route::get('/ingresar', [proyectoController::class, 'ingresar'])->name('ingresar');
 Route::get('/register', [proyectoController::class, 'register'])->name('register');
+Route::post('/registro', [proyectoController::class, 'registro'])->name('registro');

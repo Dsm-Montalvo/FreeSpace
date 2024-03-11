@@ -40,20 +40,22 @@
   <!--  final del navbar -->
   <div class="content">
     <section>
-    <form>
+    <form action="{{route ('ingresar')}}" method="GET">
+      {{ csrf_field() }}
         <h1>inicio </h1>
         <div class="inputbox">
             <ion-icon name="mail-outline"></ion-icon>
-            <input type="email"  required>
+            <input type="email" name="email" id="email" required>
             <label for= "">Correo</label>
         </div>
         <div class="inputbox">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" required>
+            <input type="password" name="password" id="password" required>
             <label for="">contraseña</label>
         </div>
         
         <input type="submit" class="submit" value="Iniciar">
+
         <div class="register">
             <p>No tengo una cuenta <a href="{{ route('register')}}">Registrarse</a></p>
         </div>
