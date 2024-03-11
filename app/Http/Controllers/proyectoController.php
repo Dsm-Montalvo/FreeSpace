@@ -11,6 +11,10 @@ class proyectoController extends Controller
         return view('inicio');
     }
 
+    public function prueba(){
+        return view('index');
+    }
+
 
     public function listado(){
         $url = env('URL_SERVER_API','http://127.0.0.1');

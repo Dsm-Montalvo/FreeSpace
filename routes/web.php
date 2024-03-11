@@ -36,3 +36,4 @@ Route::get('/delete/{id}', [proyectoController::class, 'delete'])->name('destroy
 
 Route::get('/listadoPIR', [proyectoController::class, 'listadoPIR'])->name('listadoPIR');
 
+Route::get('/prueba', [proyectoController::class, 'prueba'])->name('prueba');
