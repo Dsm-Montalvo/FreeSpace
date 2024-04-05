@@ -94,66 +94,68 @@ class proyectoController extends Controller
         return view('Login/login');
     }
 
-    public function ingresar(Request $request){
-       
-                    // Validar las credenciales del usuario
+    public function ingresar(Request $request) {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        // Realizar la solicitud a la API externa para iniciar sesión
+    
         $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
         $response = Http::post($url.'/usuarios/login', [
             'email' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
-
-       /* 
-        $this->validate($request,[
-            'email' => 'required',
-            'password'=> 'required',
-        ]);
-
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
-        $response = Http::get($url.'/usuarios/' . $email . '/' . $password);
-
-        if ($response=="null") {
-            // Si la consulta es exitosa, renderiza la vista 'exito'
-            return view('Login.login');
+    
+        if ($response->successful()) {
+            $data = $response->json();
+    
+            $token = $data['token']; // Suponiendo que la API devuelve un token de autenticación
+            session()->put('external_api_token', $token); // Guardar el token en la sesión
+    
+            $userData = [
+                'id' => $data['id'],
+                'name' => $data['name'],
+                'app' => $data['app'],
+                'apm' => $data['apm'],
+                'date' => $data['date'],
+                'email' => $data['email'],
+                'role' => $data['role']
+            ];// Suponiendo que la API devuelve los datos del usuario
+            session()->put('user_data', $userData); // Guardar los datos del usuario en la sesión
+    
+            $role = $userData['role']; // Obtener el rol del usuario
+    
+            if ($role === 'admin') {
+                return redirect('/create');
+            } elseif ($role === 'estudiante') {
+                return redirect('/indexe');
+            } elseif ($role === 'Profesor') {
+                return redirect('/indexp');
+            } else {
+                return redirect('/pagina-general');
+            }
         } else {
-            // Si la consulta no es exitosa, renderiza la vista 'error'
-            return view('insercion');
-        } */
-        
-    // Verificar si la solicitud a la API fue exitosa y si las credenciales son válidas
-    if ($response->successful()) {
-        $token = $response->json()['token']; // Suponiendo que la API devuelve un token de autenticación
-        session()->put('external_api_token', $token); // Guardar el token en la sesión
-
-        // Redirigir al usuario a la página de inicio, dashboard, o cualquier otra página deseada
-        $role = $response->json()['role']; // Suponiendo que el rol del usuario está disponible en la respuesta
-
-        // Redirigir según el rol del usuario
-        if ($role === 'admin') {
-            return redirect('/create');
-        } elseif ($role === 'estudiante') {
-            return redirect('/indexe');
-        } elseif ($role === 'Profesor') {
-            return redirect('/indexp');
-        }else {
-            // Manejar cualquier otro tipo de rol
-            return redirect('/pagina-general');
+            return redirect('/login')->with('error', 'Credenciales inválidas');
         }
-    } else {
-        // Las credenciales proporcionadas son inválidas
-        return redirect('/login')->with('error', 'Credenciales inválidas');
+    }
+    
+    //---------------------------------------------perfil------------------------
+    public function perfil()
+    {
+        // Obtener los datos del usuario desde la sesión
+        $userData = session()->get('user_data');
+
+        // Verificar si los datos del usuario están disponibles
+        if ($userData) {
+            // Los datos del usuario están disponibles, haz lo que necesites con ellos
+            return view('profesores.detalles', ['userData' => $userData]);
+        } else {
+            // Los datos del usuario no están disponibles en la sesión, maneja el caso según tu lógica
+            return redirect('/login')->with('error', 'Debes iniciar sesión primero');
+        }
     }
 
-    }
+    //--------------------------------------------------------------------------------------
 
     public function register(){
         return view('Login/register');
@@ -199,6 +201,7 @@ class proyectoController extends Controller
 
     public function cerrarSesion(){
         session()->forget('external_api_token');
+        session()->forget('user_data');
         return view('Login.login');
     }
 
@@ -273,7 +276,7 @@ class proyectoController extends Controller
         return view('estudiantes.detalle');
     }
     public function calendario(){
-        return view('estudiantes.index');
+        return view('estudiantes.calendario');
     }
    
 

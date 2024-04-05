@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <title>Detalles</title>
+    <title>Recerva</title>
 
     <link rel="stylesheet" href="{{asset('css/estilosweb.css')}}">
 </head>
@@ -29,12 +29,12 @@
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" href="{{ route('detalles') }}">Detalles de Espacios</a>
+          <a class="nav-link " href="{{ route('detalles') }}">Detalles de Espacios</a>
         </li>
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('reserva') }}">Reserva de Espacios</a>
+          <a class="nav-link active" href="{{ route('reserva') }}">Reserva de Espacios</a>
         </li>
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
@@ -54,15 +54,8 @@
 <center>
   
 
-  <h1>Perfil de usuario</h1>
+  <h1>Reserva</h1>
 
-@if ($userData)
-    <p>Nombre: {{ $userData['name'] }}</p>
-    <p>Email: {{ $userData['email'] }}</p>
-    <!-- Otros datos del usuario -->
-@else
-    <p>No se han encontrado datos de usuario.</p>
-@endif
 </center>
 
 
