@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
+use Illuminate\Validation\Rule;
 
 class proyectoController extends Controller
 {
@@ -239,9 +240,48 @@ class proyectoController extends Controller
     public function reserva(){
         return view('profesores.Reserva');
     }
-    public function historial(){
-        return view('profesores.historial');
+    
+    public function guardarDatos(Request $request){
+        $request->validate([
+            
+            'fechaRegistro' => 'required',
+            'fechaUtilizar'=> 'required',
+            'horaInicio'=> 'required',
+            'horaFinal' => 'required',
+            'aula' => 'required',
+        ]);
+
+        $idUsuario = $request->session()->get('id');
+        
+       
+        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+        $response = Http::post($url. '/apartadoEspacio', [
+            'fechaRegistro' => $request-> fechaRegistro,
+            'fechaUtilizar' => $request-> fechaUtilizar,
+            'horaInicio' => $request-> horaInicio,
+            'horaFinal' => $request-> horaFinal,
+            'aula' => $request-> aula,
+            'idUsuario' => $idUsuario, 
+        ]);
+
+        return redirect()->route('indexp'); 
+
     }
+   
+
+    
+   
+    
+
+    public function historial(){
+        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+        $response = Http::get($url.'/apartadoEspacio');
+        $datos = $response->json();
+        return view('profesores.historial', compact('datos'));
+    }
+
+    
+
 
     public function registerteacher(){
         return view('Login/registerteacher');

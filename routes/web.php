@@ -58,6 +58,7 @@ Route::get('/indexp', [proyectoController::class, 'indexp'])->middleware('check.
 Route::get('/explorar', [proyectoController::class, 'explorar'])->middleware('check.external.api.login')->name('explorar');
 Route::get('/detalles', [proyectoController::class, 'perfil'])->middleware('check.external.api.login')->name('detalles');
 Route::get('/reserva', [proyectoController::class, 'reserva'])->middleware('check.external.api.login')->name('reserva');
+Route::post('/guardarDatos', [proyectoController::class, 'guardarDatos'])->middleware('check.external.api.login')->name('guardarDatos');
 Route::get('/historial', [proyectoController::class, 'historial'])->middleware('check.external.api.login')->name('historial');
 Route::get('/registerteacher', [proyectoController::class, 'registerteacher'])->name('registerteacher');
 Route::post('/registroteacher', [proyectoController::class, 'registroteacher'])->name('registroteacher');

@@ -56,7 +56,7 @@
 <center>
   
 
-  <h1>Perfil de usuario</h1>
+  <h1>Aula</h1>
 
 {{-- @if ($userData)
     <p>Nombre: {{ $userData['name'] }}</p>

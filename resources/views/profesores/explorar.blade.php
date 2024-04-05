@@ -27,11 +27,11 @@
           <a class="nav-link active" href="{{ route('explorar') }}">Explorar Espacios</a>
         </li>
       </ul>
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      {{-- <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link " href="{{ route('detalles') }}">Detalles de Espacios</a>
         </li>
-      </ul>
+      </ul> --}}
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('reserva') }}">Reserva de Espacios</a>
@@ -51,13 +51,22 @@
   </div>
 </nav>
 <!--  final del navbar -->
-<center>
-  
-
-  <h1>explorar</h1>
 
 
-</center>
+<div id="container">
+    <div id="image_container">
+
+      <img src="{{ asset('img/Aulas3.png') }}" usemap="#image_map">
+      <map name="image_map">
+        <area alt="aula101" title="aula101" href="{{ route('detalles') }}" coords="34,35,381,225" shape="rect">
+        <area alt="aula103" title="aula103" href="{{ route('detalles') }}" coords="475,37,784,230" shape="rect">
+        <area alt="aula102" title="aula102" href="{{ route('detalles') }}" coords="35,231,382,427" shape="rect">
+      </map>
+      
+
+    </div>
+
+</div>
 
 
 

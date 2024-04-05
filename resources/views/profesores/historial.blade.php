@@ -27,11 +27,11 @@
           <a class="nav-link" href="{{ route('explorar') }}">Explorar Espacios</a>
         </li>
       </ul>
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      {{-- <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link " href="{{ route('detalles') }}">Detalles de Espacios</a>
         </li>
-      </ul>
+      </ul> --}}
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('reserva') }}">Reserva de Espacios</a>

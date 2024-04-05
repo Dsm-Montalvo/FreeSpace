@@ -27,11 +27,11 @@
           <a class="nav-link" href="{{ route('explorar') }}">Explorar Espacios</a>
         </li>
       </ul>
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      {{-- <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link " href="{{ route('detalles') }}">Detalles de Espacios</a>
         </li>
-      </ul>
+      </ul> --}}
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" href="{{ route('reserva') }}">Reserva de Espacios</a>
@@ -51,14 +51,54 @@
   </div>
 </nav>
 <!--  final del navbar -->
-<center>
+
+<h1>Ingresar Datos</h1>
+
+<hr>
+    <form method="POST" action="{{ route('guardarDatos') }}">
+        @csrf
+
+        <div>
+          <label for="fechaRegistro">Fecha de Registro:</label>
+          <input type="date" id="fechaRegistro" name="fechaRegistro" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required>
+      </div>
   
+      <div>
+          <label for="fechaUtilizar">Fecha a Utilizar:</label>
+          <input type="date" id="fechaUtilizar" name="fechaUtilizar" min="{{ date('Y-m-d') }}" required>
+      </div>
 
-  <h1>Reserva</h1>
+        <div>
+            <label for="horaInicio">Hora de Inicio:</label>
+            <select id="horaInicio" name="horaInicio">
+                @for ($hour = 7; $hour <= 20; $hour++)
+                    @for ($minute = 0; $minute < 60; $minute += 50)
+                        <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}</option>
+                    @endfor
+                @endfor
+            </select>
+        </div>
 
-</center>
+        <div>
+            <label for="horaFinal">Hora de Finalización:</label>
+            <select id="horaFinal" name="horaFinal">
+                @for ($hour = 7; $hour <= 20; $hour++)
+                    @for ($minute = 0; $minute < 60; $minute += 50)
+                        <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}</option>
+                    @endfor
+                @endfor
+            </select>
+        </div>
 
+        <div>
+            <label for="aula">Aula:</label>
+            <input type="text" id="aula" name="aula" placeholder="107">
+        </div>
 
+      
+
+        <button type="submit">Guardar Datos</button>
+    </form>
 
 </body>
 </html>
