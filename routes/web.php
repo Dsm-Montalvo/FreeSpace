@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\proyectoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckExternalAPILogin;
+use App\Http\Middleware\CheckRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +25,9 @@ use Illuminate\Support\Facades\Route;
  Route::get('/', [proyectoController::class, 'index'])->name('index');
 
  //---------------------------Inicio-----------------------------------------------------------
-Route::get('/listado', [proyectoController::class, 'listado'])->name('listado');
+Route::get('/listado', [proyectoController::class, 'listado'])->middleware('check.external.api.login')->name('listado');
 //---------------------------------Crear------------------------------------------------------
-Route::get('/create', [proyectoController::class, 'create'])->name('create');
+/* Route::get('/create', [proyectoController::class, 'create'])->name('create'); */
 Route::post('/create', [proyectoController::class, 'save'])->name('create.save');
 //-------------------------------Actualizar----------------------------------------------------
 Route::get('/update/{id}', [proyectoController::class, 'update'])->name('actualizar');
@@ -41,3 +43,27 @@ Route::get('/login', [proyectoController::class, 'login'])->name('login');
 Route::get('/ingresar', [proyectoController::class, 'ingresar'])->name('ingresar');
 Route::get('/register', [proyectoController::class, 'register'])->name('register');
 Route::post('/registro', [proyectoController::class, 'registro'])->name('registro');
+
+Route::get('/cerrarSesion', [proyectoController::class, 'cerrarSesion'])->name('cerrarSesion');
+
+
+//-----------------------------------------------------admin----------------------------------------
+Route::get('/create', [proyectoController::class, 'create'])->name('create');
+
+/* ->middleware('role:admin') */
+
+//-----------------------------------------Profesores+---------------------------------------------
+
+Route::get('/indexp', [proyectoController::class, 'indexp'])->middleware('check.external.api.login')->name('indexp');
+Route::get('/explorar', [proyectoController::class, 'explorar'])->middleware('check.external.api.login')->name('explorar');
+Route::get('/detalles', [proyectoController::class, 'detalles'])->middleware('check.external.api.login')->name('detalles');
+Route::get('/recerva', [proyectoController::class, 'recerva'])->middleware('check.external.api.login')->name('recerva');
+Route::get('/historial', [proyectoController::class, 'historial'])->middleware('check.external.api.login')->name('historial');
+Route::get('/registerteacher', [proyectoController::class, 'registerteacher'])->name('registerteacher');
+Route::post('/registroteacher', [proyectoController::class, 'registroteacher'])->name('registroteacher');
+
+//-----------------------------------------------Estudiantes-------------------------------------------
+
+Route::get('/indexe', [proyectoController::class, 'indexe'])->middleware('check.external.api.login')->name('indexe');
+Route::get('/calendario', [proyectoController::class, 'calendario'])->middleware('check.external.api.login')->name('calendario');
+Route::get('/detalle', [proyectoController::class, 'detalle'])->middleware('check.external.api.login')->name('detalle');

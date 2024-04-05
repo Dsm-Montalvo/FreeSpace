@@ -1,0 +1,50 @@
+cosas utiles de controller
+
+    public function ingresar(Request $request){
+       
+                    // Validar las credenciales del usuario
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Realizar la solicitud a la API externa para iniciar sesión
+        $url = env('URL_SERVER_API','http://127.0.0.1');
+        $response = Http::post($url.'/usuarios/login', [
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+        ]);
+
+       /* 
+        $this->validate($request,[
+            'email' => 'required',
+            'password'=> 'required',
+        ]);
+
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $url = env('URL_SERVER_API','http://127.0.0.1');
+        $response = Http::get($url.'/usuarios/' . $email . '/' . $password);
+
+        if ($response=="null") {
+            // Si la consulta es exitosa, renderiza la vista 'exito'
+            return view('Login.login');
+        } else {
+            // Si la consulta no es exitosa, renderiza la vista 'error'
+            return view('insercion');
+        } */
+        
+    // Verificar si la solicitud a la API fue exitosa y si las credenciales son válidas
+    if ($response->successful()) {
+        $token = $response->json()['token']; // Suponiendo que la API devuelve un token de autenticación
+        session()->put('external_api_token', $token); // Guardar el token en la sesión
+
+        // Redirigir al usuario a la página de inicio, dashboard, o cualquier otra página deseada
+        return redirect('/listado');
+    } else {
+        // Las credenciales proporcionadas son inválidas
+        return redirect('/login')->with('error', 'Credenciales inválidas');
+    }
+
+    }

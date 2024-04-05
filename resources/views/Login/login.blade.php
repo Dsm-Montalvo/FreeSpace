@@ -59,6 +59,10 @@
         <div class="register">
             <p>No tengo una cuenta <a href="{{ route('register')}}">Registrarse</a></p>
         </div>
+        <hr>
+        <div class="register">
+          <p>Eres Docente!!!? Crea una cuenta <a href="{{ route('registerteacher')}}">Registrarse</a></p>
+      </div>
     </form>
 </section>
 </div>
