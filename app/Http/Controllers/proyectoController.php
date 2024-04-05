@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class proyectoController extends Controller
 {
@@ -142,17 +143,22 @@ class proyectoController extends Controller
     //---------------------------------------------perfil------------------------
     public function perfil()
     {
-        // Obtener los datos del usuario desde la sesión
-        $userData = session()->get('user_data');
+       // Aquí obtienes los datos necesarios para la vista
+    $client = new Client();
+    $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+    $data = json_decode($response->getBody(), true);
 
-        // Verificar si los datos del usuario están disponibles
-        if ($userData) {
-            // Los datos del usuario están disponibles, haz lo que necesites con ellos
-            return view('profesores.detalles', ['userData' => $userData]);
-        } else {
-            // Los datos del usuario no están disponibles en la sesión, maneja el caso según tu lógica
-            return redirect('/login')->with('error', 'Debes iniciar sesión primero');
-        }
+    $temperaturaData = [];
+    $humedadData = [];
+    $movimientoData = [];
+    foreach ($data as $item) {
+        $temperaturaData[] = $item['temperatura'];
+        $humedadData[] = $item['humedad'];
+        $movimientoData[] = $item['movimiento'];
+    }
+
+    // Luego, pasas los datos a la vista
+    return view('profesores.detalles', compact('temperaturaData', 'humedadData', 'movimientoData'));
     }
 
     //--------------------------------------------------------------------------------------
@@ -214,8 +220,22 @@ class proyectoController extends Controller
         return view('profesores.explorar');
     }
     public function detalles(){
-        return view('profesores.detalles');
+        $client = new Client();
+        $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+        $data = json_decode($response->getBody(), true);
+
+        $temperaturaData = [];
+        $humedadData = [];
+        $movimientoData = [];
+        foreach ($data as $item) {
+            $temperaturaData[] = $item['temperatura'];
+            $humedadData[] = $item['humedad'];
+            $movimientoData[] = $item['movimiento'];
+        }
+
+        return view('profesores.detalles', compact('temperaturaData', 'humedadData', 'movimientoData'));
     }
+
     public function reserva(){
         return view('profesores.Reserva');
     }
