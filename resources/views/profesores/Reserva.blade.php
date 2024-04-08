@@ -52,53 +52,71 @@
 </nav>
 <!--  final del navbar -->
 
-<h1>Ingresar Datos</h1>
+<h1>Reverva tu Espacio</h1>
 
 <hr>
-    <form method="POST" action="{{ route('guardarDatos') }}">
-        @csrf
 
-        <div>
-          <label for="fechaRegistro">Fecha de Registro:</label>
-          <input type="date" id="fechaRegistro" name="fechaRegistro" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required>
-      </div>
+<div class="container" style="margin-left: 20px;">
+    <div class="row">
+        <div class="col-md-6">
+            <form method="POST" action="{{ route('guardarDatos') }}" class="row g-2">
+                @csrf
+
+                <div class="col-md-12">
+                    <label for="fechaRegistro" class="form-label">Fecha de Registro:</label>
+                    <input type="date" id="fechaRegistro" class="form-control" name="fechaRegistro" value="{{ date('Y-m-d') }}" max="{{ date('Y-m-d') }}" required>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="fechaUtilizar" class="form-label">Fecha a Utilizar:</label>
+                    <input type="date" id="fechaUtilizar" class="form-control" name="fechaUtilizar" min="{{ date('Y-m-d') }}" required>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="horaInicio" class="form-label">Hora de Inicio:</label>
+                    <select id="horaInicio" class="form-control" name="horaInicio"></select>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="horaFinal" class="form-label">Hora de Finalización:</label>
+                    <select id="horaFinal" class="form-control" name="horaFinal"></select>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="aula" class="form-label">Aula:</label>
+                    <input type="text" class="form-control" id="aula" name="aula" placeholder="107">
+                </div>
+                
+                @if ($userData)
+                    <input type="hidden" name="user_id" id="user_id" value="{{ $userData['id'] }}">
+                @else
+                    <p>No se han encontrado datos de usuario.</p>
+                @endif
+                <br>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Guardar Datos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <script>
+      // Función para rellenar los select boxes con las opciones de hora
+      function fillSelectBoxes() {
+          var inicioSelect = document.getElementById("horaInicio");
+          var finalSelect = document.getElementById("horaFinal");
   
-      <div>
-          <label for="fechaUtilizar">Fecha a Utilizar:</label>
-          <input type="date" id="fechaUtilizar" name="fechaUtilizar" min="{{ date('Y-m-d') }}" required>
-      </div>
-
-        <div>
-            <label for="horaInicio">Hora de Inicio:</label>
-            <select id="horaInicio" name="horaInicio">
-                @for ($hour = 7; $hour <= 20; $hour++)
-                    @for ($minute = 0; $minute < 60; $minute += 50)
-                        <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}</option>
-                    @endfor
-                @endfor
-            </select>
-        </div>
-
-        <div>
-            <label for="horaFinal">Hora de Finalización:</label>
-            <select id="horaFinal" name="horaFinal">
-                @for ($hour = 7; $hour <= 20; $hour++)
-                    @for ($minute = 0; $minute < 60; $minute += 50)
-                        <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:{{ str_pad($minute, 2, '0', STR_PAD_LEFT) }}</option>
-                    @endfor
-                @endfor
-            </select>
-        </div>
-
-        <div>
-            <label for="aula">Aula:</label>
-            <input type="text" id="aula" name="aula" placeholder="107">
-        </div>
-
-      
-
-        <button type="submit">Guardar Datos</button>
-    </form>
-
+          var horas = ["07:00", "07:50", "08:40", "09:30", "10:20", "11:10", "12:00", "12:50", "13:40", "14:30", "15:20", "16:10", "17:00", "17:50", "18:40", "19:30", "20:20", "21:10"];
+  
+          for (var i = 0; i < horas.length; i++) {
+              var option = new Option(horas[i], horas[i]);
+              inicioSelect.add(option);
+              finalSelect.add(option.cloneNode(true));
+          }
+      }
+  
+      // Llamar a la función para rellenar los select boxes al cargar la página
+      fillSelectBoxes();
+  </script>
 </body>
 </html>

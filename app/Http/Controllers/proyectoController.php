@@ -238,7 +238,15 @@ class proyectoController extends Controller
     }
 
     public function reserva(){
-        return view('profesores.Reserva');
+        $userData = session()->get('user_data');
+        
+        if ($userData) {
+            // Los datos del usuario están disponibles, haz lo que necesites con ellos
+            return view('profesores.Reserva', ['userData' => $userData]);
+        } else {
+            // Los datos del usuario no están disponibles en la sesión, maneja el caso según tu lógica
+            return redirect('/login')->with('error', 'Debes iniciar sesión primero');
+        }
     }
     
     public function guardarDatos(Request $request){
@@ -249,22 +257,21 @@ class proyectoController extends Controller
             'horaInicio'=> 'required',
             'horaFinal' => 'required',
             'aula' => 'required',
+            'user_id' => 'required',
         ]);
 
-        $idUsuario = $request->session()->get('id');
-        
        
         $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
-        $response = Http::post($url. '/apartadoEspacio', [
+        $response = Http::post($url. '/apartadoEspacio/', [
             'fechaRegistro' => $request-> fechaRegistro,
             'fechaUtilizar' => $request-> fechaUtilizar,
             'horaInicio' => $request-> horaInicio,
             'horaFinal' => $request-> horaFinal,
             'aula' => $request-> aula,
-            'idUsuario' => $idUsuario, 
+            'idUsuario' => $request-> user_id, 
         ]);
 
-        return redirect()->route('indexp'); 
+        return redirect()->route('indexp');  
 
     }
    
