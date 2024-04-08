@@ -42,6 +42,11 @@
           <a class="nav-link" href="{{ route('historial') }}">Historial de Reserva</a>
         </li>
       </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>
@@ -83,9 +88,13 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="aula" class="form-label">Aula:</label>
-                    <input type="text" class="form-control" id="aula" name="aula" placeholder="107">
-                </div>
+                  <label for="aula" class="form-label">Aula:</label>
+                  <select id="aula" class="form-select" name="aula">
+                      <option value="101">101</option>
+                      <option value="102">102</option>
+                      <option value="103">103</option>
+                  </select>
+              </div>
                 
                 @if ($userData)
                     <input type="hidden" name="user_id" id="user_id" value="{{ $userData['id'] }}">

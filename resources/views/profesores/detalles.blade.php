@@ -8,7 +8,7 @@
     <title>Detalles</title>
     <!-- Incluye Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{asset('css/estilosweb.css')}}">
 </head>
 <body>
@@ -44,6 +44,11 @@
           <a class="nav-link" href="{{ route('historial') }}">Historial de Reserva</a>
         </li>
       </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>
@@ -54,17 +59,9 @@
 </nav>
 <!--  final del navbar -->
 <center>
-  
 
-  <h1>Aula</h1>
+  <h1>Aula 101</h1>
 
-{{-- @if ($userData)
-    <p>Nombre: {{ $userData['name'] }}</p>
-    <p>Email: {{ $userData['email'] }}</p>
-    <!-- Otros datos del usuario -->
-@else
-    <p>No se han encontrado datos de usuario.</p>
-@endif --}}
 </center>
 <div style="width: 100%; display: flex; justify-content: space-between;">
   <div style="width: 30%; ">
@@ -77,6 +74,55 @@
       <canvas id="movimientoChart" width="400" height="200"></canvas>
   </div>
 </div>
+
+
+<hr><br>
+<div style="width: 100%; display: flex; justify-content: space-between;">
+  <div style="width: 30%; ">
+    <i class="bi bi-thermometer" style="font-size: 2em;"> {{$temperatura}}</i>
+  </div>
+  <div style="width: 30%;">
+    <i class="bi bi-droplet-half" style="font-size: 2em;"> {{$humedad}}</i>
+  </div>
+  <div style="width: 30%;">
+    <i class="bi bi-arrows-move" style="font-size: 2em;"> @if($movimiento == 1)
+      Hay movimiento
+  @else
+      No hay movimiento
+  @endif</i>
+  </div>
+</div>
+
+<br><br><hr>
+<div >
+<table class="table table-hover border border-2 border-success  table-bordered" >
+  <thead>
+      <tr>
+          <th>Fecha de Registro</th>
+          <th>Fecha a Utilizar</th>
+          <th>Hora de Inicio</th>
+          <th>Hora de Finalización</th>
+          <th>Aula</th>
+          <th>ID de Usuario</th>
+      </tr>
+  </thead>
+  <tbody>
+      @foreach ($datos as $dato)
+      <tr>
+          <td>{{ $dato['fechaRegistro'] }}</td>
+          <td>{{ $dato['fechaUtilizar'] }}</td>
+          <td>{{ $dato['horaInicio'] }}</td>
+          <td>{{ $dato['horaFinal'] }}</td>
+          <td>{{ $dato['aula'] }}</td>
+          <td>{{ $dato['idUsuario'] }}</td>
+      </tr>
+      @endforeach
+  </tbody>
+</table>
+</div>
+
+
+
 
 
 <script>

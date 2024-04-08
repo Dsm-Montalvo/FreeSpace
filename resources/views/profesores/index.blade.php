@@ -41,6 +41,11 @@
           <a class="nav-link" href="{{ route('historial') }}">Historial de Reserva</a>
         </li>
       </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>

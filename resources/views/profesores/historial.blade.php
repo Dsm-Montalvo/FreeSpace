@@ -42,6 +42,11 @@
           <a class="nav-link active" href="{{ route('historial') }}">Historial de Reserva</a>
         </li>
       </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>
@@ -57,7 +62,32 @@
   <h1>Historial</h1>
 
 </center>
-
+<table class="table table-hover border border-5 border-danger  table-bordered" >
+  <thead>
+      <tr>
+          <th>Fecha de Registro</th>
+          <th>Fecha a Utilizar</th>
+          <th>Hora de Inicio</th>
+          <th>Hora de Finalización</th>
+          <th>Aula</th>
+          <th>ID de Usuario</th>
+          <th>Nombre Usuario</th>
+      </tr>
+  </thead>
+  <tbody>
+      @foreach ($datos as $dato)
+      <tr>
+          <td>{{ $dato['fechaRegistro'] }}</td>
+          <td>{{ $dato['fechaUtilizar'] }}</td>
+          <td>{{ $dato['horaInicio'] }}</td>
+          <td>{{ $dato['horaFinal'] }}</td>
+          <td>{{ $dato['aula'] }}</td>
+          <td>{{ $dato['idUsuario'] }}</td>
+          <td>{{ $userData['name'] }} {{ $userData['app'] }} {{ $userData['apm'] }}</td>
+      </tr>
+      @endforeach
+  </tbody>
+</table>
 
 
 </body>

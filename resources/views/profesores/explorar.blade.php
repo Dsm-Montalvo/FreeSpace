@@ -42,6 +42,11 @@
           <a class="nav-link" href="{{ route('historial') }}">Historial de Reserva</a>
         </li>
       </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>
@@ -59,8 +64,8 @@
       <img src="{{ asset('img/Aulas3.png') }}" usemap="#image_map">
       <map name="image_map">
         <area alt="aula101" title="aula101" href="{{ route('detalles') }}" coords="34,35,381,225" shape="rect">
-        <area alt="aula103" title="aula103" href="{{ route('detalles') }}" coords="475,37,784,230" shape="rect">
-        <area alt="aula102" title="aula102" href="{{ route('detalles') }}" coords="35,231,382,427" shape="rect">
+        <area alt="aula103" title="aula103" href="{{ route('detalles3') }}" coords="475,37,784,230" shape="rect">
+        <area alt="aula102" title="aula102" href="{{ route('detalles2') }}" coords="35,231,382,427" shape="rect">
       </map>
       
 

@@ -52,7 +52,7 @@
 <!--  final del navbar -->
 <center>
 
-  <h1>Aula 101</h1>
+  <h1>Aula 103</h1>
 
 </center>
 <div style="width: 100%; display: flex; justify-content: space-between;">

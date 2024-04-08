@@ -12,6 +12,9 @@ class proyectoController extends Controller
     public function index(){
         return view('inicio');
     }
+    public function info(){
+        return view('informacion');
+    }
     public function graficos(){
         return view('grafico.graficas');
     }
@@ -148,6 +151,19 @@ class proyectoController extends Controller
     $client = new Client();
     $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
     $data = json_decode($response->getBody(), true);
+    $aula = 101;    
+        
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+    $datos = $response->json();
+
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/ultimosDatos');
+    $ultimosDatos = $response->json();
+
+    $temperatura = $ultimosDatos['temperatura'];
+    $humedad = $ultimosDatos['humedad'];
+    $movimiento = $ultimosDatos['movimiento'];
 
     $temperaturaData = [];
     $humedadData = [];
@@ -159,7 +175,80 @@ class proyectoController extends Controller
     }
 
     // Luego, pasas los datos a la vista
-    return view('profesores.detalles', compact('temperaturaData', 'humedadData', 'movimientoData'));
+    return view('profesores.detalles', compact('temperatura', 'humedad', 'movimiento','temperaturaData', 'humedadData', 'movimientoData', 'datos'));
+    }
+    
+    
+    //-----------------
+
+
+    public function perfil2()
+    {
+       // Aquí obtienes los datos necesarios para la vista
+    $client = new Client();
+    $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+    $data = json_decode($response->getBody(), true);
+    $aula = 102;    
+        
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+    $datos = $response->json();
+
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/ultimosDatos');
+    $ultimosDatos = $response->json();
+
+    $temperatura = $ultimosDatos['temperatura'];
+    $humedad = $ultimosDatos['humedad'];
+    $movimiento = $ultimosDatos['movimiento'];
+
+    $temperaturaData = [];
+    $humedadData = [];
+    $movimientoData = [];
+    foreach ($data as $item) {
+        $temperaturaData[] = $item['temperatura'];
+        $humedadData[] = $item['humedad'];
+        $movimientoData[] = $item['movimiento'];
+    }
+
+    // Luego, pasas los datos a la vista
+    return view('profesores.detalles2', compact('temperatura', 'humedad', 'movimiento','temperaturaData', 'humedadData', 'movimientoData', 'datos'));
+    }
+    
+    //------------------
+
+
+    public function perfil3()
+    {
+       // Aquí obtienes los datos necesarios para la vista
+    $client = new Client();
+    $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+    $data = json_decode($response->getBody(), true);
+    $aula = 103;    
+        
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+    $datos = $response->json();
+
+    $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+    $response = Http::get($url.'/ultimosDatos');
+    $ultimosDatos = $response->json();
+
+    $temperatura = $ultimosDatos['temperatura'];
+    $humedad = $ultimosDatos['humedad'];
+    $movimiento = $ultimosDatos['movimiento'];
+
+    $temperaturaData = [];
+    $humedadData = [];
+    $movimientoData = [];
+    foreach ($data as $item) {
+        $temperaturaData[] = $item['temperatura'];
+        $humedadData[] = $item['humedad'];
+        $movimientoData[] = $item['movimiento'];
+    }
+
+    // Luego, pasas los datos a la vista
+    return view('profesores.detalles3', compact('temperatura', 'humedad', 'movimiento','temperaturaData', 'humedadData', 'movimientoData' , 'datos'));
     }
 
     //--------------------------------------------------------------------------------------
@@ -281,10 +370,14 @@ class proyectoController extends Controller
     
 
     public function historial(){
+
+         $userData = session()->get('user_data');
+         
+        
         $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
-        $response = Http::get($url.'/apartadoEspacio');
+        $response = Http::get($url.'/apartadoEspacio/id/'.$userData['id']);
         $datos = $response->json();
-        return view('profesores.historial', compact('datos'));
+        return view('profesores.historial',['userData' => $userData], compact('datos'));
     }
 
     
@@ -333,6 +426,19 @@ class proyectoController extends Controller
     }
 
 
+    public function allRecervas(){
+
+        $userData = session()->get('user_data');
+        
+       
+       $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+       $response = Http::get($url.'/apartadoEspacio');
+       $datos = $response->json();
+       return view('profesores.allRecervas', compact('datos'));
+   }
+
+
+
     //-------------------------------------------------Estudiantes-----------------------------------
 
     public function indexe(){
@@ -340,11 +446,97 @@ class proyectoController extends Controller
     }
 
     public function detalle(){
-        return view('estudiantes.detalle');
+        $client = new Client();
+        $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+        $data = json_decode($response->getBody(), true);
+
+        $aula = 101;    
+        
+        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+        $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+        $datos = $response->json();
+    
+        $temperaturaData = [];
+        $humedadData = [];
+        $movimientoData = [];
+        foreach ($data as $item) {
+            $temperaturaData[] = $item['temperatura'];
+            $humedadData[] = $item['humedad'];
+            $movimientoData[] = $item['movimiento'];
+        }
+    
+        // Luego, pasas los datos a la vista
+        return view('estudiantes.detalle', compact('temperaturaData', 'humedadData', 'movimientoData' , 'datos'));
+        
+    }
+
+    //-----------
+
+
+    public function detalle2(){
+        $client = new Client();
+        $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+        $data = json_decode($response->getBody(), true);
+
+        $aula = 102;    
+        
+        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+        $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+        $datos = $response->json();
+    
+        $temperaturaData = [];
+        $humedadData = [];
+        $movimientoData = [];
+        foreach ($data as $item) {
+            $temperaturaData[] = $item['temperatura'];
+            $humedadData[] = $item['humedad'];
+            $movimientoData[] = $item['movimiento'];
+        }
+    
+        // Luego, pasas los datos a la vista
+        return view('estudiantes.detalle2', compact('temperaturaData', 'humedadData', 'movimientoData' , 'datos'));
+        
+    }
+
+    //------------------
+
+
+    public function detalle3(){
+        $client = new Client();
+        $response = $client->request('GET', 'https://api-mongodb-9be7.onrender.com/api/datosSensor');
+        $data = json_decode($response->getBody(), true);
+
+        $aula = 103;    
+        
+        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+        $response = Http::get($url.'/apartadoEspacio/aula/'.$aula);
+        $datos = $response->json();
+    
+        $temperaturaData = [];
+        $humedadData = [];
+        $movimientoData = [];
+        foreach ($data as $item) {
+            $temperaturaData[] = $item['temperatura'];
+            $humedadData[] = $item['humedad'];
+            $movimientoData[] = $item['movimiento'];
+        }
+    
+        // Luego, pasas los datos a la vista
+        return view('estudiantes.detalle3', compact('temperaturaData', 'humedadData', 'movimientoData' , 'datos'));
+        
     }
     public function calendario(){
-        return view('estudiantes.calendario');
+        return view('estudiantes.explorar');
     }
    
+    public function allRecervasE(){
 
+        $userData = session()->get('user_data');
+        
+       
+       $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+       $response = Http::get($url.'/apartadoEspacio');
+       $datos = $response->json();
+       return view('estudiantes.allRecervas', compact('datos'));
+   }
 }

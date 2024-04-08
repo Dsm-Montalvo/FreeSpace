@@ -8,17 +8,17 @@
     <title>Detalles</title>
     <!-- Incluye Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{asset('css/estilosweb.css')}}">
 </head>
 <body>
 <!-- inicio de navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ route('indexe') }}">
+    <a class="navbar-brand" href="{{ route('indexp') }}">
       <img src="{{ asset('img/logo.jpg') }}" alt="" width="60" height="54">
     </a>
-    <a class="navbar-brand" href="{{ route('indexe') }}">FreeSpace</a>
+    <a class="navbar-brand" href="{{ route('indexp') }}">FreeSpace</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,21 +26,29 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('calendario') }}">Explorar Espacios</a>
+          <a class="nav-link" href="{{ route('explorar') }}">Explorar Espacios</a>
         </li>
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active " href="{{ route('detalle') }}">Detalles de Espacios</a>
+          <a class="nav-link active" href="{{ route('detalles') }}">Detalles de Espacios</a>
         </li>
       </ul>
-
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('allRecervasE') }}">Recervaciones</a>
+          <a class="nav-link" href="{{ route('reserva') }}">Reserva de Espacios</a>
         </li>
       </ul>
-      
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('historial') }}">Historial de Reserva</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " href="{{ route('allRecervas') }}">Recervaciones</a>
+        </li>
+      </ul>
       <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left: auto;">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('cerrarSesion') }}">Cerrar sesión</a>
@@ -51,8 +59,8 @@
 </nav>
 <!--  final del navbar -->
 <center>
-
-  <h1>Aula 101</h1>
+  
+  <h1>Aula 103</h1>
 
 </center>
 <div style="width: 100%; display: flex; justify-content: space-between;">
@@ -67,7 +75,27 @@
   </div>
 </div>
 
+<hr><br>
+<div style="width: 100%; display: flex; justify-content: space-between;">
+  <div style="width: 30%; ">
+    <i class="bi bi-thermometer" style="font-size: 2em;"> {{$temperatura}}</i>
+  </div>
+  <div style="width: 30%;">
+    <i class="bi bi-droplet-half" style="font-size: 2em;"> {{$humedad}}</i>
+  </div>
+  <div style="width: 30%;">
+    <i class="bi bi-arrows-move" style="font-size: 2em;"> @if($movimiento == 1)
+      Hay movimiento
+  @else
+      No hay movimiento
+  @endif</i>
+  </div>
+</div>
+
 <br><br><hr>
+
+
+
 <div >
 <table class="table table-hover border border-2 border-success  table-bordered" >
   <thead>
@@ -94,6 +122,9 @@
   </tbody>
 </table>
 </div>
+
+
+
 
 
 
