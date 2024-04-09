@@ -381,50 +381,69 @@ class proyectoController extends Controller
     }
 
     
-
-
     public function registerteacher(){
         return view('Login/registerteacher');
     }
     public function registroteacher(Request $request){
         $request->validate([
-            
             'name' => 'required',
             'app'=> 'required',
             'apm'=> 'required',
             'date' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
-        ]);
-        
-        $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
-        $response = Http::post($url. '/usuarios/profesores', [
-            'name' => $request-> name,
-            'app' => $request-> app,
-            'apm' => $request-> apm,
-            'date' => $request-> date,
-            'email' => $request-> email,
-            'password' => $request-> password,
+            'huellaId' => 'required',
         ]);
 
-            // Verifica si la solicitud fue exitosa (código de respuesta en el rango 2xx)
-            if ($response->successful()) {
-                // Si es exitosa, verifica el contenido de la respuesta
-                $data = $response->json();
+        $client = new Client();
+        try {
+            $url = env('URL_SERVER_API','https://api-mongodb-9be7.onrender.com');
+                // Realiza la solicitud POST a la API
+            $response = $client->request('POST', $url.'/usuarios/profesores', [
+                'json'=>[
+                    'name' => $request->name,
+                    'app' => $request->app,
+                    'apm' => $request->apm,
+                    'date' => $request->date,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'huellaId' => $request->huellaId,
+                ]
+        ]);
+        if ($response->getStatusCode() == 200) {
+            return redirect('/error');
         
-                if (isset($data['message']['code']) && $data['message']['code'] == 11000) {
-                    // Si el código de error indica duplicado, muestra un mensaje de error
-                    return redirect()->back()->withInput()->withErrors(['error' => 'El usuario ya está registrado']);
-                } else {
-                    // Si no hay errores específicos, redirige a la vista 'exito'
-                    return view('Login.login')->with('mensaje', 'Registro exitoso');
-                }
+        } else {
+            return redirect ('/login');
+        }
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            if ($e->getResponse()->getStatusCode() == 400) {
+                // Si el ID de la huella ya está en uso, redirige al formulario
+                return redirect('/registerteacher')->withErrors(['huellaId' => 'El ID de la huella ya está en uso.']);
             } else {
-                // Si hay un error en la solicitud, regresa al formulario de registro con un mensaje de error genérico
-                return redirect()->back()->withInput()->withErrors(['error' => 'Hubo un problema al registrar el usuario']);
+                // Para otros errores, redirige a la página de error
+                return redirect('/error');
             }
+        }
+        
+/*         // Verifica si la solicitud fue exitosa (código de respuesta en el rango 2xx)
+        if ($response->successful()==200) {
+            // Si es exitosa, redirige a la vista 'exito'
+            return view('Login.login')->with('mensaje', 'Registro exitoso');
+        } else {
+            // Si la respuesta tiene un estado 400, es probable que el huellaId ya esté en uso
+            if ($response->status() == 400) {
+                $errorData = $response->json();
+                if (isset($errorData['message']) && $errorData['message'] == 'El ID de la huella dactilar ya está en uso.') {
+                    // Redirige al formulario con un mensaje de error específico
+                    return redirect()->back()->withInput()->withErrors(['huellaId' => 'El ID de la huella dactilar ya está en uso.']);
+                }
+            }
+            // Para otros errores, redirige a la página de error con un mensaje genérico
+            return redirect()->back()->withInput()->withErrors(['error' => 'Hubo un problema al registrar el usuario']);
+        } */
     }
-
+    
 
     public function allRecervas(){
 
