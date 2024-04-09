@@ -347,6 +347,9 @@ class proyectoController extends Controller
             'horaFinal' => 'required',
             'aula' => 'required',
             'user_id' => 'required',
+            'user_name' => 'required',
+            'user_app' => 'required',
+            'user_apm' => 'required',
         ]);
 
        
@@ -358,6 +361,7 @@ class proyectoController extends Controller
             'horaFinal' => $request-> horaFinal,
             'aula' => $request-> aula,
             'idUsuario' => $request-> user_id, 
+            'nombreUsuario' => $request->user_name ." ". $request->user_app ." " . $request->user_apm,
         ]);
 
         return redirect()->route('indexp');  
