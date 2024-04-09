@@ -10,6 +10,21 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{asset('css/estilosweb.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+  #info_salón {
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    color: white;
+  }
+  .libre {
+    background-color: green;
+  }
+  .ocupado {
+    background-color: red;
+  }
+</style>
 </head>
 <body>
 <!-- inicio de navbar -->
@@ -91,11 +106,13 @@
   @endif</i>
   </div>
 </div>
-
 <br><br><hr>
-
-
-
+<!-- Elemento donde se mostrarán los datos -->
+<div id="info_salón">
+  <h2>Información del Salón</h2>
+  <p id="datos_salón">Esperando datos...</p>
+</div>
+<br><br><hr>
 <div >
 <table class="table table-hover border border-2 border-success  table-bordered" >
   <thead>
@@ -122,11 +139,6 @@
   </tbody>
 </table>
 </div>
-
-
-
-
-
 
 <script>
   var temperaturaData = @json($temperaturaData);
@@ -194,5 +206,6 @@
       }
   });
 </script>
+<script src="{{asset('js/validacionSalon.js')}}"></script>
 </body>
 </html>

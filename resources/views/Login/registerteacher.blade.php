@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{asset('css/estilos.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Registrarse</title>
 </head>
 <body>
@@ -98,7 +99,11 @@
             <div class="barra-seguridad" id="barra-seguridad"></div>
             <div class="texto-barra" id="texto-barra"></div>
             <br>
-
+            <div class="inputbox">
+                <label for="huellaId" class="form-label">Huella Dactilar:</label>
+                <input type="text" class="form-control" id="huellaId" name="huellaId"  required  >
+            </div>
+            <div id="validationMessage"></div>
         
             <input type="submit" class="submit" value="Guardar">
         
@@ -106,5 +111,6 @@
 </section>
   </div>
 <script src="{{asset ('js/validaciones.js')}}"></script>
+<script src="{{asset ('js/validacionesHuella.js')}}"></script>
 </body>
 </html>
